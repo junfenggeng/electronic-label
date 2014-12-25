@@ -1,0 +1,135 @@
+@font-face { font-family: "smalle"; src: url("./my_font/smalle.fon");  }
+body,html{
+    height: 100%;
+    width: 100%;
+    -webkit-font-smoothing: none;
+    font-family:smalle,'宋体','Microsoft YaHei',sans-serif,Arial;
+}
+.logo-wrap{
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+.logo{
+    background: #5799d3;
+    height: 100%;
+    width: 60%;
+    margin: 0 auto;
+    font-weight: bold;
+    color: #eee;
+
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 1px solid #3f6f97;
+}
+.update-label{
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+.shop-wrap{
+    width: 94%;
+    margin: 20px auto;
+}
+.shop-wrap>.shops{
+    width: 200px;
+    height: 30px;
+}
+.shop-wrap>.shops:focus{
+    outline: none;
+}
+.shops>option{
+    height: 30px;
+}
+
+.btn-group{
+    height: 50px;
+    display: table;
+    table-layout: fixed;
+    width: 94%;
+    margin: 0 auto;
+}
+.btn-group>a{
+    line-height: 50px;
+    display: table-cell;
+    height: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+  
+    color: #fff;
+    border: 1px solid #ccc;
+    background: #1284ff;
+}
+.lable-wrap{
+    position: absolute;
+    top: 110px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-top: 10px;
+}
+.label-desc{
+    width: 94%;
+    margin: 0 auto;
+}
+.label-desc>ul{
+    width: 100%;
+}
+
+.label-desc>ul>li{
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #666;
+}
+.label-desc>ul span{
+    text-align: left;
+    display: table-cell;
+    width: auto;
+}
+table td,table th{
+    text-align: center;
+    color: #333;
+}
+.update-lable-status{
+    position: absolute;
+    top: 120px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y:auto;
+}
+.update-lable-status>table{
+    width: 94%;
+    margin: 20px auto;
+}
+.update-lable-status>table tr,.update-lable-status>table td,.update-lable-status>table th{
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+}
+.update-lable-status>table tr:first-child td{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.update-lable-status>table th{
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+.update-lable-status>table td{
+    padding-top: 6px;
+    padding-bottom: 6px;
+}

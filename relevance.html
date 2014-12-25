@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Create an association</title>
+	<link rel="stylesheet" type="text/css" href="./css/ionicons/css/ionicons.css">
+	<link href="./css/reset.css" type="text/css" rel="stylesheet">
+	<link href="css/relevance.css"  type="text/css" rel="stylesheet">
+
+	<script type="text/javascript" src="./js/jquery.min.js"></script>
+</head>
+<body>
+	<div class="top-bar">
+		<div class="top-bar-wrap">
+			<span class="ion-chevron-left" onclick="window.history.go(-1)">back</span>
+		</div>
+	</div>
+	<div class="relevance_wrap">
+		<form id="cre_association">
+			<div class="scan">
+				<input type="text" class="text-input" readonly name="prod_id" id="prod_id" placeholder="product lable">
+				<button class="button button--cta" onclick="return false;">Scan</button>
+			</div>
+			<div class="scan">
+				<input type="text" class="text-input" name="ele_tag_id" id="ele_tag_id" readonly placeholder="electronic lable">
+				<button class="button button--cta" onclick="return false;">Scan</button>
+			</div>
+			<div class="scan">
+				<button class="button button--cta button--submit">Create an association</button>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Create an association</title>
+	<link rel="stylesheet" type="text/css" href="./css/ionicons/css/ionicons.css">
+	<link href="./css/reset.css" type="text/css" rel="stylesheet">
+	<link href="css/setLable.css"  type="text/css" rel="stylesheet">
+	<style>
+		#canvas-wrap{
+			text-align: center;
+			background: #666;
+		}
+		.mycanvas{
+			height: 88px;
+			margin: 5px auto;
+			background: #fff;
+		}
+
+		
+		.btn-group{
+			margin-top: 20px;
+			text-align: center;
+		}
+		.btn-group>span{
+			display: inline-block;
+			height: 40px;
+			line-height: 40px;
+			width: 100px;
+			color: red;
+			border: 1px solid #FA9354;
+			background: #aaa;
+			border-radius: 3px;
+			cursor: pointer;
+		}
+		.btn-group>span:last-child{
+			margin-left: 20px;
+		}
+	</style>
+	
+	<script type="text/javascript" src="./js/jquery.min.js"></script>
+	<script type="text/javascript" src="./js/setLabel.js"></script>
+</head>
+<body>
+	<div class="top-bar">
+		<div class="top-bar-wrap">
+			<span class="ion-chevron-left" onclick="window.history.go(-1)">back</span>
+		</div>
+	</div>
+	<div class="reset-lable">
+		<div class="reset-lable-wrap">
+			<div class="scan-product-code clearfix">
+				<input type="text" class="text-input" readonly name="prodid" placeholder="product lable">
+				<button class="button button--cta scan">Scan</button><!--调用扫描接口  然后根据回过来的数据去连接设备-->
+			</div>
+			<div class="set-label-info">
+				<!--<展示连接状态>-->
+				<div class="status"><span class="status_display" >展示连接状态</span></div>
+				<!--展示设置信息按钮   向板子写入数据-->
+				<!--<form id="set-electronic">-->
+					<!--广播周期-->
+					<div class="range-wrap">
+						<div>set brodcast interval</div>
+						<div>
+							<input type="range" class="range" min="2" max="40" id="broadcast-interval"><span class="broadcast_val">21</span>
+						</div>
+					</div>
+					<!--发射功率设置-->
+					<div class="range-wrap capacity-factor">
+						<div>set capacity factor</div>
+						<div>
+							<input type="range" class="range" min="1" max="5" id="capacity-factor"><span class="broadcast_val">3</span>
+						</div>
+					</div>
+					
+					<button class="button button--cta button--submit">set electronic info</button>
+
+				<!--</form>-->
+			</div>
+			
+			<div id="ele-label">
+				<div class="lengend">商品信息设置</div>
+				<form id="" class="setform" action="">
+					<input type="text" placeholder="bluetooth address" name="bltaddress" hidden>
+					<input type="text" placeholder="price" name="price">
+					<input type="text" placeholder="name" name="name">
+					<!--<input type="text" placeholder="provider" name="provider">-->
+					<button class="button button--cta button--submit">set electronic</button>
+				</form>
+
+				<div id="canvas-wrap">
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

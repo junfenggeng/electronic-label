@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Create an association</title>
+	<style>
+		body,html{
+			width: 100%;
+			height: 100%;
+		}
+		body{
+			margin: 0;
+			padding: 0;
+			background: #ddd;
+			user-select: none;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+		}
+		#canvas-wrap{
+			text-align: center;
+			height: 88px;
+		}
+		.mycanvas{
+			margin-top: 10px;
+			background: #fff;
+			font-family: smalle;
+		}
+
+		
+		.btn-group{
+			margin-top: 20px;
+			text-align: center;
+		}
+		.btn-group>span{
+			display: inline-block;
+			height: 40px;
+			line-height: 40px;
+			width: 100px;
+			color: red;
+			border: 1px solid #FA9354;
+			background: #aaa;
+			border-radius: 3px;
+			cursor: pointer;
+		}
+		.btn-group>span:last-child{
+			margin-left: 20px;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="canvas-wrap">
+		<canvas id="mycanvas" class="mycanvas" width="232" height="88"></canvas>
+	</div>
+	<div class="btn-group">
+		<span id="clear">clear</span><span id="send">send</span>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	function processFn(obj,fn){
+		return function(e){
+			fn.call(obj,e);
+		}
+	}
+
+	function DrawMyPicture(id,opt){
+		this.ele=document.getElementById("mycanvas");
+		this.opt=opt||{};
+		this.ctx=this.ele.getContext("2d");
+
+
+		this.init();
+		return this;
+	}
+
+
+	DrawMyPicture.prototype.init=function(){
+		this.Start=processFn(this,this.drawStart);
+		this.ele.addEventListener("touchstart",this.Start,false);
+	}
+
+	DrawMyPicture.prototype.drawStart=function(e){
+		this.Move=processFn(this,this.drawMove);
+		window.addEventListener("touchmove",this.Move,false);
+
+		this.End=processFn(this,this.drawEnd);
+		window.addEventListener("touchend",this.End,false);
+
+		var e=e||window.event;
+		console.log(e);
+		var targetTouches=e.targetTouches;
+		if(targetTouches.length==1){
+			this.ctx.beginPath();
+			this.ctx.moveTo(targetTouches[0].clientX-this.ele.offsetLeft,targetTouches[0].clientY-this.ele.offsetTop);
+		}
+	}
+
+	DrawMyPicture.prototype.drawMove=function(e){
+
+		var e=e||window.event;
+		var targetTouches=e.targetTouches;
+
+		if(targetTouches.length==1){
+			this.ctx.lineTo(targetTouches[0].clientX-this.ele.offsetLeft,targetTouches[0].clientY-this.ele.offsetTop);
+			this.ctx.stroke();
+		}
+	}
+
+	DrawMyPicture.prototype.drawEnd=function(){
+		window.removeEventListener("touchend",this.Move,false);
+		window.removeEventListener("touchend",this.End,false);
+		
+		this.Move=null;
+		this.End=null;
+
+		document.getElementById("send").addEventListener("click",sendData,false);
+	}
+
+	DrawMyPicture.prototype.clearDraw=function(){
+		document.getElementById("send").removeEventListener("click",sendData,false);
+		this.ctx.clearRect(0,0,this.ele.width,this.ele.height);
+	}
+
+	DrawMyPicture.prototype.sendData=function(){
+
+		var imgData=this.ctx.getImageData(0,0,this.ele.width,this.ele.height);
+		var tempArr=[],resultArr=[];
+
+		for(var i=0,count=0,len=imgData.data.length;i<len;i++){
+			if(i%4==3){
+				if(count==8){
+					count=0;
+					resultArr.push(tempArr.join(""));
+					tempArr=[];
+				}
+				if(imgData.data[i]){
+					tempArr.push(1);
+				}else{
+					tempArr.push(0);
+				}
+				count++;
+			}
+		}
+
+		console.log(resultArr);
+	}
+	var drawObj=new DrawMyPicture();
+
+	var clearDraw=processFn(drawObj,drawObj.clearDraw);
+	var sendData=processFn(drawObj,drawObj.sendData);
+
+	document.getElementById("clear").addEventListener("click",clearDraw,false);
+	
+</script>
