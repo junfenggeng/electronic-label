@@ -40,8 +40,8 @@ var app={
 			if(app.flag){
 				app.flag=false;
 
-				broadcastIntervalValue=broadcastInterval.value?broadcastInterval.value:21;
-				capacityFactorValue=capacityFactor.value?capacityFactor.value:3;
+				var broadcastIntervalValue=broadcastInterval.value?broadcastInterval.value:21;
+				var capacityFactorValue=capacityFactor.value?capacityFactor.value:3;
 
 				//发送数据给蓝牙接口
 
