@@ -15,6 +15,31 @@ $(function(){
 				}
 				shopSelect.appendChild(curOption);
 			})
+
+
+			$(".btn-group>a:eq(1)").click(function(){
+				clearListLabelInfo();
+				//再次点击清空列表
+
+				if(flag){
+
+					flag=false;
+
+					$.ajax({
+						url:"http://api.juma.io/hl_demo/labels",
+						type:"get",
+						data:{shop:document.getElementById("shops").value},
+						dataType:"json",
+						success:function(result){
+							renderLabelCount(result.labels);
+							result.labels.forEach(updateLabel);
+						},
+						error:function(msg){
+							console.log(msg)
+						}
+					})
+				}
+			})
 		},
 		error:function(msg){
 			console.log(msg);
@@ -23,30 +48,7 @@ $(function(){
 
 	var flag=true;
 	var curUpdataSucessCount=0,curUpdataFailedCount=0;
-	$(".btn-group>a:eq(1)").click(function(){
-		clearListLabelInfo();
-
-		//再次点击清空列表
-
-		if(flag){
-
-			flag=false;
-
-			$.ajax({
-				url:"http://api.juma.io/hl_demo/labels",
-				type:"get",
-				data:{shop:document.getElementById("shops").value},
-				dataType:"json",
-				success:function(result){
-					renderLabelCount(result.labels);
-					result.labels.forEach(updateLabel);
-				},
-				error:function(msg){
-					console.log(msg)
-				}
-			})
-		}
-	})
+	
 
 	var generalInfo=[
 		["device_address","icon","goods_id","barcode","price","name","provider"],["蓝牙地址","图标","ID","条码","价格","名称","供应商"]
@@ -123,11 +125,15 @@ $(function(){
 	function ShowInfoToCanvas(curLabel,canvasId){
 		var self=this;
 
+		
 		self.ele=document.createElement("canvas");
 		//self.ele.className="mycanvas";
 		document.getElementById("canvas-wrap").appendChild(self.ele);
+
 		self.ctx=self.ele.getContext("2d");	
+		self.curLabel=curLabel;
 		self.W=self.ele.width;
+
 		this.init(curLabel);
 	}
 
@@ -208,7 +214,8 @@ $(function(){
 		console.log(data);
 		
 		try{
-        	window.memory.write("write_success" , "write_error" , "D7:3A:DE:59:98:C7", data);
+			console.log(this);
+        	window.memory.write("write_success" , "write_error" , this.curLabel.device_address, data);
         }catch(e){
         	console.log(e);
         }

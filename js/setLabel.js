@@ -7,6 +7,34 @@ var app={
 
 		broadcastInterval.addEventListener("touchmove",app.setValue,false);
 		capacityFactor.addEventListener("touchmove",app.setValue,false);
+
+		$(".scan-product-code>.scan").click(function(){
+			var url = "http://127.0.0.1:8086/ble?callback=?";
+			//var url="http://www.gatt.io:8080/ble?callback=?";
+			var params = {
+			            address : "local",
+			            resource : "/devices/nearby",
+			            operation : "read",
+			            settings :"low latency"
+			        };
+			$.getJSON(url,params,function(data){
+				var devices = data['device_list'];
+
+	            if (devices.length == 0) {
+	                $(selector).html('no device found');
+	                return;
+	            }
+
+	            var devicesSort=devices.sort(function(a,b){
+	            	return Math.abs(a.rssi)-Math.abs(b.rssi);
+	            })
+	            
+	            var rssiMax=devicesSort[0];
+
+	            $('.scan-product-code>input[type="text"]').val(rssiMax.address);
+
+			});
+		})
 		
 		$(".set-lable-info").find("button").click(function(){
 			if(app.flag){
@@ -17,6 +45,9 @@ var app={
 
 				//发送数据给蓝牙接口
 				//设置成功之后设置flag值为true
+
+				var deviceAddress=$('.scan-product-code>input[type="text"]').val();
+
 			}
 
 		})
@@ -128,8 +159,14 @@ function ShowInfoToCanvas(curLabel){
 
         var data = '[' + resultArr.toString() + ']';
 
+        var deviceAddress=$('.scan-product-code>input[type="text"]').val();
+
 		console.log(data);
-        //window.memory.write("write_success" , "write_error" , "D7:3A:DE:59:98:C7", data);
+        try{
+        	window.memory.write("write_success" , "write_error" , deviceAddress, data);
+        }catch(e){
+        	console.log(e);
+        }
 	}
 	ShowInfoToCanvas.prototype.drawText=function(textString,obj){
 		this.ctx.beginPath();
