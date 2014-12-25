@@ -16,7 +16,7 @@ var app={
 				capacityFactorValue=capacityFactor.value?capacityFactor.value:3;
 
 				//发送数据给蓝牙接口
-				//设置成功之后设置flag值为true
+				//设置成功之后设置flag值为 true
 			}
 
 		})
