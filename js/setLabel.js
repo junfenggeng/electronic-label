@@ -44,10 +44,14 @@ var app={
 				capacityFactorValue=capacityFactor.value?capacityFactor.value:3;
 
 				//发送数据给蓝牙接口
+<<<<<<< HEAD
 				//设置成功之后设置flag值为true
 
 				var deviceAddress=$('.scan-product-code>input[type="text"]').val();
 
+=======
+				//设置成功之后设置flag值为 true
+>>>>>>> origin/gh-pages
 			}
 
 		})
