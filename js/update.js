@@ -127,6 +127,8 @@ $(function(){
 
 		
 		self.ele=document.createElement("canvas");
+        self.ele.width = 232;
+        self.ele.height = 88;
 		//self.ele.className="mycanvas";
 		document.getElementById("canvas-wrap").appendChild(self.ele);
 
@@ -187,7 +189,8 @@ $(function(){
 	}
 
 	ShowInfoToCanvas.prototype.sendData=function(){
-
+        console.log(this.ele.width);
+        console.log(this.ele.height);
 		var imgData=this.ctx.getImageData(0,0,this.ele.width,this.ele.height);
 		this.ele.parentNode.removeChild(this.ele);
 		var tempArr=[],resultArr=[];
@@ -199,7 +202,7 @@ $(function(){
 					resultArr.push(parseInt(tempArr.join(""), 2));
 					tempArr=[];
 				}
-				if(imgData.data[i]){
+				if(imgData.data[i] > 64){
 					tempArr.push(1);
 				}else{
 					tempArr.push(0);
