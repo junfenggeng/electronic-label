@@ -159,8 +159,8 @@ var generalInfo=[
 	]
 
 var generalInfoOffset={
-		price:{x:10,y:20,fillStyle:"black",font:"16px smalle"},
-		name:{x:10,y:40,fillStyle:"black",font:"16px smalle"},
+		price:{x:100,y:50,fillStyle:"black",font:"32px smalle"},
+		name:{x:10,y:50,fillStyle:"black",font:"32px smalle"},
 	}
 
 
@@ -190,7 +190,7 @@ function ShowInfoToCanvas(curLabel){
 		self.ctx.clearRect(0,0,self.ele.width,self.ele.height);
 
 		for(var i=0;i<generalInfo[0].length;i++){		
-			this.drawText(generalInfo[1][i]+"："+curLabel[generalInfo[0][i]],generalInfoOffset[generalInfo[0][i]]);					
+			this.drawText(curLabel[generalInfo[0][i]],generalInfoOffset[generalInfo[0][i]]);					
 		}
 
 		this.sendData();
@@ -227,7 +227,7 @@ function ShowInfoToCanvas(curLabel){
 		var imgData=this.ctx.getImageData(0,0,this.ele.width,this.ele.height);
 		
 		var tempArr=[],resultArr=[];
-
+        console.log(imgData);
 		for(var i=0,count=0,len=imgData.data.length;i<len;i++){
 			if(i%4==3){
 				if(count==8){
@@ -235,7 +235,7 @@ function ShowInfoToCanvas(curLabel){
 					resultArr.push(parseInt(tempArr.join(""), 2));
 					tempArr=[];
 				}
-				if(imgData.data[i]){
+				if(imgData.data[i] > 64){
 					tempArr.push(1);
 				}else{
 					tempArr.push(0);
