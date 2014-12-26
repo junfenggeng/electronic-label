@@ -54,13 +54,13 @@ $(function(){
 		["device_address","icon","goods_id","barcode","price","name","provider"],["蓝牙地址","图标","ID","条码","价格","名称","供应商"]
 	]
 	var generalInfoOffset={
-		device_address:{x:10,y:20,fillStyle:"black",font:"16px '宋体'"},
-		icon:{x:50,y:28,fillStyle:"black",font:"10px '宋体'"},
-		goods_id:{x:116,y:36,fillStyle:"black",font:"10px '宋体'"},
-		barcode:{x:10,y:56,fillStyle:"black",font:"12px '宋体'"},
-		price:{x:116,y:56,fillStyle:"black",font:"12px  '宋体'"},
-		name:{x:10,y:72,fillStyle:"black",font:"12px  '宋体'"},
-		provider:{x:116,y:72,fillStyle:"black",font:"12px  '宋体'"},
+		device_address:{x:10,y:20,fillStyle:"black",font:"16px smalle"},
+		icon:{x:50,y:28,fillStyle:"black",font:"10px smalle"},
+		goods_id:{x:116,y:36,fillStyle:"black",font:"10px smalle"},
+		barcode:{x:10,y:56,fillStyle:"black",font:"12px smalle"},
+		price:{x:116,y:56,fillStyle:"black",font:"12px  smalle"},
+		name:{x:10,y:72,fillStyle:"black",font:"12px  smalle"},
+		provider:{x:116,y:72,fillStyle:"black",font:"12px  smalle"},
 		goods_logo:{x:10,y:36,font:"12px  '宋体'"}
 	}
 	//curLabel当前的标签
@@ -71,7 +71,7 @@ $(function(){
 			new ShowInfoToCanvas(curLabel);
 		}
 		
-		updateSuccess({id:"11",dianliang:"21",rssi:"-50"})
+		//updateSuccess({id:"11",dianliang:"21",rssi:"-50"})
 		
 		//更新完毕
 		if(index==(arr.length-1)){
@@ -214,7 +214,9 @@ $(function(){
 		console.log(data);
 		
 		try{
-			console.log(this);
+
+			//updateSuccess({id:"11",dianliang:"21",rssi:"-50"})  write_success的回调
+			//updateFailed({id:"11",dianliang:"21",rssi:"-50"})   write_error的回调
         	window.memory.write("write_success" , "write_error" , this.curLabel.device_address, data);
         }catch(e){
         	console.log(e);

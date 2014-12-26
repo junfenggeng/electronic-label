@@ -8,8 +8,12 @@ var app={
 		broadcastInterval.addEventListener("touchmove",app.setValue,false);
 		capacityFactor.addEventListener("touchmove",app.setValue,false);
 
+		//事件委托  点击li
+		app.device_list_click();
+
 		$(".scan-product-code>.scan").click(function(){
 			var url = "http://127.0.0.1:8086/ble?callback=?";
+
 			//var url="http://www.gatt.io:8080/ble?callback=?";
 			var params = {
 			            address : "local",
@@ -24,14 +28,27 @@ var app={
 	                $(selector).html('no device found');
 	                return;
 	            }
+	            //show alert-dialog
+	            $("#alert-dialog").show(300);
 
+	            //sort deives by rssi
 	            var devicesSort=devices.sort(function(a,b){
 	            	return Math.abs(a.rssi)-Math.abs(b.rssi);
 	            })
 	            
-	            var rssiMax=devicesSort[0];
+	            var deviceWrap=document.getElementById("deviceWrap");
+	            
+	            //empty deviceWrap
+	            deviceWrap.innerHTML="";
+	            
+	            //render devicelist
+	            devicesSort.forEach(function(item,index,arr){
+	            	app.createLi(deviceWrap,"li",item);
+	            })
+	            
+	            /*var rssiMax=devicesSort[0];
 
-	            $('.scan-product-code>input[type="text"]').val(rssiMax.address);
+	            $('.scan-product-code>input[type="text"]').val(rssiMax.address);*/
 
 			});
 		})
@@ -63,12 +80,37 @@ var app={
 			
 			e.preventDefault();
 		})
+
+
+		$(".exitBtn").click(function(){
+			 $("#alert-dialog").hide(300);
+		})
 	},
 	setValue:function(){
 		$(this).siblings(".broadcast_val").html(this.value);
+	},
+	createLi:function(parentNode,tagName,item){
+		if(parentNode.nodeType!==1){
+			throw new Error("Invalid arguments");
+		}else{
+			var createTag=document.createElement(tagName);
+			createTag.setAttribute("address",item.address);
+
+			createTag.innerHTML='DA-><span class="DA">'+item.address+'</span>'+'&nbsp;&nbsp;RSSI-><span class="RSSI">'+item.rssi+'</span>'
+			parentNode.appendChild(createTag);
+		}
+	},
+	device_list_click:function(){
+		$("#deviceWrap").click(function(e){
+			var node=e.target;
+			if(node.nodeType==1&&node.nodeName.toUpperCase()=="LI"){
+				$('.scan-product-code>input[type="text"]').val(node.getAttribute("address"));
+			}
+		})
 	}
 };
 
+//render canvas data model
 var generalInfo=[
 		["name","price"],["产品名称","产品价格"]
 	]
@@ -77,6 +119,8 @@ var generalInfoOffset={
 		price:{x:10,y:20,fillStyle:"black",font:"16px smalle"},
 		name:{x:10,y:40,fillStyle:"black",font:"16px smalle"},
 	}
+
+
 function ShowInfoToCanvas(curLabel){
 		var self=this;
 
@@ -177,6 +221,7 @@ function ShowInfoToCanvas(curLabel){
 		this.ctx.fillText(textString, obj.x, obj.y);
 		this.ctx.closePath();
 	}
+
 $(function(){
 	app.init();
 })
