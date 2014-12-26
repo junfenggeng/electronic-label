@@ -210,11 +210,13 @@ $(function(){
 				count++;
 			}
 		}
+
+        console.log(resultArr.length);
 		//console.log(resultArr);
 
         var data = '[' + resultArr.toString() + ']';
 
-		console.log(data);
+		//console.log(data);
 		
 		try{
 
