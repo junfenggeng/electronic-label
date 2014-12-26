@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>Create an association</title>
+	<title>标签控制面板</title>
 	<link rel="stylesheet" type="text/css" href="./css/ionicons/css/ionicons.css">
 	<link href="./css/reset.css" type="text/css" rel="stylesheet">
 	<link href="css/setLable.css"  type="text/css" rel="stylesheet">
@@ -61,21 +61,18 @@
 				<!--<form id="set-electronic">-->
 					<!--广播周期-->
 					<div class="range-wrap">
-						<div>set brodcast interval</div>
+						<div>设置广播周期</div>
 						<div>
-							<input type="range" class="range" min="2" max="40" id="broadcast-interval"><span class="broadcast_val">21</span>
+							<input type="range" class="range" min="1" max="7" id="broadcast-interval"><span class="broadcast_val" id="broadcast-interval-text"> -- </span>
 						</div>
 					</div>
 					<!--发射功率设置-->
-					<div class="range-wrap capacity-factor">
-						<div>set capacity factor</div>
+					<div class="range-wrap tx-power">
+						<div>设置发射功率</div>
 						<div>
-							<input type="range" class="range" min="1" max="5" id="capacity-factor"><span class="broadcast_val">3</span>
+							<input type="range" class="range" min="0" max="7" id="tx-power"><span id="tx-power-text" class="broadcast_val"> -- </span>
 						</div>
 					</div>
-					
-					<button class="button button--cta button--submit">set electronic info</button>
-
 				<!--</form>-->
 			</div>
 			
@@ -86,7 +83,7 @@
 					<input type="text" placeholder="price" name="price">
 					<input type="text" placeholder="name" name="name">
 					<!--<input type="text" placeholder="provider" name="provider">-->
-					<button class="button button--cta button--submit">set electronic</button>
+					<button class="button button--cta button--submit">刷新屏幕</button>
 				</form>
 
 				<div id="canvas-wrap">

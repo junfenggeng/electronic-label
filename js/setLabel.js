@@ -2,11 +2,46 @@ var app={
 	flag:true,
 
 	init:function(){
-		var broadcastInterval=document.getElementById("broadcast-interval");
-		var capacityFactor=document.getElementById("capacity-factor")
+        $("#broadcast-interval").change(function() {
+			var url = "http://127.0.0.1:8086/ble?callback=?";
+            v = parseInt($("#broadcast-interval").val());
+            $("#broadcast-interval-text").html(v+"秒钟");
+			var deviceAddress=$('.scan-product-code>input[type="text"]').val();
 
-		broadcastInterval.addEventListener("touchmove",app.setValue,false);
-		capacityFactor.addEventListener("touchmove",app.setValue,false);
+            adv_param = Math.ceil((v * 1000 / 0.625));
+
+            console.log("set broadcast interval to " + v + " s (" +
+                        adv_param + ")");
+
+			var params = {
+			    address : deviceAddress,
+			    resource : "/radio/advinterval",
+			    operation : "write",
+			    value: adv_param
+			};
+			$.getJSON(url,params,function(data){});
+        });
+
+        $("#tx-power").change(function() {
+			var url = "http://127.0.0.1:8086/ble?callback=?";
+            v = parseInt($("#tx-power").val());
+
+            powers = [-30, -20, -16, -12, -8, -4, 0, 4];
+
+            $("#tx-power-text").html(powers[v] + "db");
+			var deviceAddress=$('.scan-product-code>input[type="text"]').val();
+
+            console.log("set broadcast interval to " + v + " (" +
+                        powers[v] + "db)");
+
+			var params = {
+			    address : deviceAddress,
+			    resource : "/radio/txpower",
+			    operation : "write",
+			    value: v
+			};
+			$.getJSON(url,params,function(data){});
+        });
 
 		//事件委托  点击li
 		app.device_list_click();
@@ -57,8 +92,8 @@ var app={
 			if(app.flag){
 				app.flag=false;
 
-				var broadcastIntervalValue=broadcastInterval.value?broadcastInterval.value:21;
-				var capacityFactorValue=capacityFactor.value?capacityFactor.value:3;
+				var broadcastIntervalValue=broadcastInterval.value?broadcastInterval.value:3200;
+				var txPowerValue=txPower.value?txPower.value:6;
 
 				//发送数据给蓝牙接口
 
@@ -66,8 +101,16 @@ var app={
 
 				var deviceAddress=$('.scan-product-code>input[type="text"]').val();
 
-			}
+			    var params = {
+			        address : deviceAddress,
+			        resource : "/radio/txpower",
+			        operation : "write",
+			        value: txPower
+			    };
+			    $.getJSON(url,params,function(data){});
 
+                app.flag = true;
+			}
 		})
 
 		$(".setform>button").click(function(e){
